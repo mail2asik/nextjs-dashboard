@@ -1,6 +1,6 @@
 import postgres from 'postgres';
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+const sql = postgres(process.env.POSTGRES_URL!);
 
 async function listInvoices() {
  	const data = await sql`
@@ -23,6 +23,6 @@ export async function GET() {
  try {
  	return Response.json(await listInvoices());
  } catch (error) {
- 	return Response.json({ error }, { status: 500 });
+ 	return Response.json({ error: String(error) }, { status: 500 });
  }
 }
